@@ -13,9 +13,11 @@ abstract class AbstractStyle implements Stylable
     protected function separatorToCamelCase($name, $separator = '_')
     {
         $separator = preg_quote($separator, '/');
-        return preg_replace(
-            "/({$separator})([a-zA-Z])/e",
-            'strtoupper("$2")',
+        return preg_replace_callback(
+            "/({$separator})([a-zA-Z])/",
+            function ($matches) {
+                return strtoupper($matches[2]);
+            },
             $name
         );
     }
